@@ -1,7 +1,7 @@
 <!doctype html>
 <html>
   <head>
-    <title>Socket.IO chat</title>
+    <title>Guessing number</title>
 <!--     <style>
       * { margin: 0; padding: 0; box-sizing: border-box; }
       body { font: 13px Helvetica, Arial; }
@@ -12,13 +12,22 @@
       #messages li { padding: 5px 10px; }
       #messages li:nth-child(odd) { background: #eee; }
     </style> -->
+    <style>
+      li.system{
+        color:blue;
+      }
+      
+      li.success{
+        color:red;
+      }
+    </style>
   </head>
   <body>
-    <ul id="messages"></ul>
     <form action="">
-      <input id="name" />
-      <input id="m" autocomplete="off" /><button>Send</button>
+      Name <input id="name" />
+      Your guessing <input id="m" autocomplete="off" /><button>Send</button>
     </form>
+    <ul id="messages"></ul>
   </body>
   
   <script src="/socket.io/socket.io.js"></script>
@@ -33,18 +42,18 @@
     });
     
     socket.on('system', function(msg){
-      $('#messages').append($('<li>').text(msg));
+      $('#messages').prepend($('<li class="system">').text(msg));
     });
     
     socket.on('update', function(msg){
       if (msg.result == 0){
-        $('#messages').append($('<li>').text(msg.name + ' has won the game. The result is ' + msg.guess));
+        $('#messages').prepend($('<li class="success">').text(msg.name + ' has won the game. The result is ' + msg.guess));
       }
       else if (msg.result == 1){
-        $('#messages').append($('<li>').text(msg.name + ': ' + msg.guess + ' is greater'));
+        $('#messages').prepend($('<li>').text(msg.name + ': ' + msg.guess + ' is greater'));
       }
       else {
-        $('#messages').append($('<li>').text(msg.name + ': ' + msg.guess + ' is less'));
+        $('#messages').prepend($('<li>').text(msg.name + ': ' + msg.guess + ' is less'));
       }
     
     });

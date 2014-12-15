@@ -1,11 +1,12 @@
 var theNumber = 0;
+var RANGE = 100;
 
 function Game(){
   this.theNumber = getNewNumber();
 }
 
 function getNewNumber(){
-  return Math.floor(Math.random() * 1000 + 1);
+  return Math.floor(Math.random() * RANGE + 1);
 }
 
 Game.prototype.guess = function(num){
